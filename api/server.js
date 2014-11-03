@@ -18,6 +18,7 @@ express.get('/', function (req, res) {
 })
 
 express.use('/allRecipes', function(req,res,next) {
+    res.header('Access-Control-Allow-Origin', '*')
     recipeApp.allRecipesHandler(req, res, next)
 })
 
