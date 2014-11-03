@@ -1,0 +1,14 @@
+{
+  "name": "family_recipes_api",
+  "version": "0.0.1",
+  "description": "Zolan's API for hist Family Recipes app.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "~4.10.1"
+  }
+}
