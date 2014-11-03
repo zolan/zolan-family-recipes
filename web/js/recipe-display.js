@@ -2,14 +2,22 @@
     app = angular.module('recipe-display', []);
 
     app.controller('RecipeDisplayController', function($scope) {
+        var self = this;
 
-        this.tab = 2;
-        this.recipeID   = 0;
+        // Defaults
+        this.tab      = 2;
+        this.recipeID = 0;
 
-        this.selectTab  = function(tabNum) { this.tab = tabNum;          };
-        this.isSelected = function(tabNum) { return this.tab === tabNum; };
+        this.selectTab  = function(tabNum) { self.tab = tabNum;          };
+        this.isSelected = function(tabNum) { return self.tab === tabNum; };
 
-        this.recipeName = $scope.allRecipes[this.recipeID].recipe_name;
+        this.showRawRecipe = function() {
+            return $scope.allRecipes[this.recipeID].recipe_raw;
+        };
+
+        this.showRecipeName = function() {
+            return $scope.allRecipes[this.recipeID].recipe_name;
+        };
 
         this.stepRecipe = function(step) {
 
@@ -23,16 +31,10 @@
             }
 
             this.recipeID = newID;
-            this.recipeName = $scope.allRecipes[this.recipeID].recipe_name; 
         };
 
         this.prevRecipe = function() { this.stepRecipe(-1); };
         this.nextRecipe = function() { this.stepRecipe(1);  };
-
-        this.showRawRecipe = function() {
-            return $scope.allRecipes[this.recipeID].recipe_raw;
-        };
-
     });
 
     app.directive("formattedRecipe", function() {
