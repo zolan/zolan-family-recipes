@@ -2,33 +2,41 @@
 "use strict"
 
 var config = {
+    banner:  "Connected to Zolan's Family Recipe API.",
     db_file: __dirname + '/data/family_recipes.sqlite',
-    port:    6622
+    port:    6622,
+    allowedOrigins: [
+        'http://www.zolan.org',
+        'http://zolan.org'
+    ]
 }
 
-var sqlite  = require('sqlite3')
-var express = require('express')()
+var sqlite         = require('sqlite3')
+var express        = require('express')()
 
 var db             = new sqlite.Database( config.db_file )
 var recipeAppClass = require(__dirname + '/recipeApp.js')
 var recipeApp      = new recipeAppClass(express, db)
 
-express.get('/', function (req, res) {
-  res.send("Connected to Zolan's Family Recipe API.")
-})
+var handleAccessControlAllowOrigin = function(req, res, next) {
+    for(var idx in config.allowedOrigins) {
+        var referrer = config.allowedOrigins[idx]
 
-express.use('/allRecipes', function(req,res,next) {
-    res.header('Access-Control-Allow-Origin', '*')
-    recipeApp.allRecipesHandler(req, res, next)
-})
+        if(req.headers.origin === referrer) {
+            res.header('Access-Control-Allow-Origin', referrer)
+        }
+    }
 
-express.get('/allRecipes', function (req, res) {
-    res.send(recipeAppCacheByKey('allRecipes'))
-})
-
-var recipeAppCacheByKey = function(cacheKey) {
-    return recipeApp.cache[cacheKey]
+    next()
 }
+
+var showBanner = function(req, res) { res.send(config.banner) }
+
+express.use('/',           handleAccessControlAllowOrigin)
+express.get('/',           showBanner)
+
+express.use('/allRecipes', recipeApp.refreshRecipe('all'))
+express.get('/allRecipes', recipeApp.sendRecipeByCacheKey('allRecipes'))
 
 // Initialize the server and listen on port.
 var server = express.listen(6622, function () {
