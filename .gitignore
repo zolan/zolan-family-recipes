@@ -1,1 +1,3 @@
 api/data/family_recipes.sqlite
+*.swp
+api/var/log/*

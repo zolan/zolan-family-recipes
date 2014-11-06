@@ -5,7 +5,7 @@
         var self = this;
 
         this.refreshAllRecipes = function() {
-            $http.get('http://zolan.org:6622/allRecipes').success(function(data) {
+            $http.get('http://zolan.org:6622/recipes/all').success(function(data) {
                 $scope.allRecipes = data
             })
         };
