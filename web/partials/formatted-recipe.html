@@ -1,5 +1,39 @@
-<div class="panel" ng-show="display.isSelected(1)">
-    <span>
-    Recipe not formatted.
-    </span>
+<div class="panel scrolling constrained" ng-show="display.isSelected(1)">
+    <div style="margin:30px 0px 0px 0px"></div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{display.recipeJSON().recipeName}}</h3>
+        </div>
+        <div class="panel-body">
+            <div class="well well-sm" ng-repeat="step in display.recipeJSON().recipeSteps track by $index">
+                <span style="font-size:1.2em;font-weight:bold" ng-show="display.recipeJSON().recipeSteps.length > 1">Step {{$index + 1}}</span>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Ingredients</div>
+                    <div class="panel-body">
+                        <div class="container-fluid" ng-repeat="ingredient in step.ingredients">
+                            <div class="col-sm-2">{{ingredient.count}}</div>
+                            <div class="col-sm-2">{{ingredient.unit}}</div>
+                            <div class="col-sm-6">{{ingredient.ingredient}}</div>
+                        </div>
+                    </div>
+                    <!--
+                    <table class="table">
+                        <tr><th>Count</th><th>Unit</th><th>Ingredient</th></tr>
+                        <tr ng-repeat="ingredient in step.ingredients">
+                            <td>{{ingredient.count}}</td>
+                            <td>{{ingredient.unit}}</td>
+                            <td>{{ingredient.ingredient}}</td>
+                        </tr>
+                    </table>
+                    -->
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Instruction(s)</div>
+                    <div class="list-group" ng-repeat="instruction in step.instructions">{{instruction.instruction}}</div>
+                </div>
+            </div>
+            <span style="font-size:1.2em;font-weight:bold">Credits:</span>
+            <span style="font-size:1.2em;">{{display.recipeJSON().credit || 'None'}}</span>
+        </div>
+    </div>
 </div>

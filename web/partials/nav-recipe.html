@@ -1,0 +1,8 @@
+<ul class="nav nav-pills">
+    <li ng-class="{ active:display.isSelected(1) }" ><a href ng-click="display.selectTab(1)">Recipe</a></li>
+    <li ng-class="{ active:display.isSelected(2) }" ><a href ng-click="display.selectTab(2)">Unformatted Recipe</a></li>
+    <li ><a href ng-click="display.prevRecipe()">     <span class="glyphicon glyphicon-backward"></span> PREV</a></li>
+    <li ><a href ng-click="display.nextRecipe()">NEXT <span class="glyphicon glyphicon-forward" ></span>     </a></li>
+    <li ><a href ng-click="display.editRecipe()">     <span class="glyphicon glyphicon-pencil"  ></span> EDIT</a></li>
+    <li ><a href ng-click="display.newRecipe()">      <span class="glyphicon glyphicon-plus"    ></span>  NEW</a></li>
+</ul>

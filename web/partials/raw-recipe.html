@@ -1,9 +1,11 @@
-<div class="panel">
-    <p>
-    <strong>Recipe Name:</strong> {{ display.showRecipeName() | uppercase}}
-    </p><p>
-    <span><pre>
-        {{ display.showRawRecipe() }}
-    </pre></span>
-    </p>
+<div class="panel scrolling constrained">
+    <div style="margin:30px 0px 0px 0px"></div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{display.recipeName()}}</h3>
+        </div>
+        <div class="panel-body">
+            <pre>{{ display.rawRecipe() }}</pre>
+        </div>
+    </div>
 </div>

@@ -1,0 +1,32 @@
+html {
+    background: transparent url('../img/bread-background.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body {
+    background-color: transparent;
+}
+
+.header-toolbar {
+    background-color: #000;
+    position: absolute;
+    top:      0px;
+    left:     0px;
+    width:    100%;
+}
+
+.header-spacer {
+    margin: 50px 0px 0px 0px;
+    width:    100%;
+}
+
+.scrolling {
+    overflow: auto;
+}
+
+.constrained {
+    max-height:90%
+}
