@@ -1,32 +1,40 @@
 #!/usr/bin/nodejs
 "use strict"
 
-var basedir = __dirname + '/..'
+var basedir       = __dirname + '/..'
 
 // 3rd party.
-var sqlite         = require('sqlite3')
-var express        = require('express')()
-var log4js         = require('log4js')
-var async          = require('async')
+var express       = require('express')()
+var bodyParser    = require('body-parser')
+var log4js        = require('log4js')
 
-var serverConfig   = require(basedir + '/etc/server-config.js')(basedir)
-var loggerConfig   = require(basedir + '/etc/logger-config.js')(serverConfig.logFile, 'server')
+// Configuration Objects
+var serverConfig  = require(basedir + '/etc/server-config')(basedir)
+var loggerConfig  = require(basedir + '/etc/logger-config')(serverConfig.logFile, serverConfig.logCategory, true)
 
-var serverLogger   = require(basedir + '/lib/makeLogger.js')(log4js, loggerConfig)
-var serverHelper   = require(basedir + '/lib/server-helper.js')(serverConfig)
-var security       = require(basedir + '/lib/security.js')(serverConfig)
+// Parts of Zolan's Family Recipes.
+var security      = require(basedir + '/lib/security')(serverConfig)
+var recipeApp     = require(basedir + '/lib/recipeApp')
+var serverHelper  = require(basedir + '/lib/server-helper')(serverConfig)
 
-var db             = new sqlite.Database( serverConfig.dbFile )
-var recipeAppClass = require(basedir + '/lib/app/recipeApp.js')
-var recipeApp      = new recipeAppClass(db)
+// Turns on logging.
+var serverLogger  = require(basedir + '/lib/makeLogger')(log4js, loggerConfig, serverConfig.logCategory)
+var expressLogger = log4js.connectLogger(serverLogger, {})
+express.use(expressLogger)
 
-var connectedLogger = log4js.connectLogger(serverLogger, {})
+// Gives 'req' a body object for easy access to json.
+express.use(bodyParser.json())
 
-express.use(connectedLogger)
-express.use('/',           security.handleAccessControlAllowOrigin)
-express.get('/',           serverHelper.showBanner)
+// Handle 'Allow-Origin' headers.
+express.use('/', security.handleAccessControlAllowOrigin)
+
+// Parts of Zolan's Family Recipes.
+express.get('/', serverHelper.showBanner)
 
 express.get('/recipes/:recipeID', recipeApp.getRecipe.bind(recipeApp))
+express.put('/recipes/:recipeID', recipeApp.putRecipe.bind(recipeApp))
+
+express.get('/editFormOptions',   recipeApp.getEditFormOptions.bind(recipeApp))
 
 // Initialize the server and listen on port.
 var server = express.listen(6622, function () {

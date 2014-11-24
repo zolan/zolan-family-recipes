@@ -1,0 +1,95 @@
+{
+    "theme": "bootstrap3",
+    "disable_array_reorder": true,
+    "disable_edit_json": true,
+    "XXdisable_collapse": true,
+    "disable_properties": true,
+    "iconlib": "bootstrap3",
+    "ref": false,
+    "schema": {
+        "title": "Recipe",
+        "type":  "object",
+        "properties": {
+            "recipeName": {
+                "title": "Recipe Name",
+                "type": "string",
+                "default": ""
+            },
+            "recipeSteps": {
+                "title": "Recipe Steps",
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "title": "Step",
+                    "properties": {
+                        "ingredients": {
+                            "title":  "Ingredients",
+                            "type":   "array",
+                            "format": "table",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "count": {
+                                        "title": "Amount",
+                                        "type": "string",
+                                        "default": ""
+                                    },
+                                    "unit": {
+                                        "title": "Unit",
+                                        "type": "string",
+                                        "enum": [
+                                            "",
+                                            "box",
+                                            "can",
+                                            "count",
+                                            "cup",
+                                            "dash",
+                                            "envelope",
+                                            "gram",
+                                            "lb",
+                                            "oz",
+                                            "pinch",
+                                            "pkg",
+                                            "pt",
+                                            "qt",
+                                            "slice",
+                                            "tbsp",
+                                            "tsp"
+                                        ],
+                                        "default": ""
+                                    },
+                                    "ingredient": {
+                                        "title": "Ingredient",
+                                        "type": "string",
+                                        "default": ""
+                                    }
+                                }
+                            }
+                        },
+                        "instructions": {
+                            "type": "array",
+                            "title": "Instructions",
+                            "format": "table",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "instruction": {
+                                        "title": "Instruction(s)",
+                                        "type": "string",
+                                        "format": "textarea",
+                                        "default": ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "credit": {
+                "title": "Credit(s)",
+                "type": "string",
+                "default": ""
+            }
+        }
+    }
+}

@@ -1,9 +1,10 @@
 var configReturner = function(basedir) {
     return {
-        banner:   "Connected to Zolan's Family Recipe API.",
-        port:     6622,
-        dbFile:   basedir + '/var/data/family_recipes.sqlite',
-        logFile:  basedir + '/var/log/server.log',
+        banner:      "Connected to Zolan's Family Recipe API.",
+        port:        6622,
+        dbFile:      basedir + '/var/data/family_recipes.sqlite',
+        logFile:     basedir + '/var/log/server.log',
+        logCategory: 'server',
         //
         allowedOrigins: [
             'http://www.zolan.org',
